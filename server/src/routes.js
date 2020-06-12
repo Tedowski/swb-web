@@ -97,7 +97,7 @@ module.exports = (app) => {
     Auth.authorize,
     GalleryController.deleteImages)
 
-  app.put('api/images',
+  app.put('/api/images',
     Auth.authorize,
     GalleryController.moveImages)
 
