@@ -71,6 +71,8 @@ module.exports = {
     const { query } = req
 
     try {
+      if (!query.imageIds) throw new ErrorHandler(403, 'Ids of images to be deleted must be provided', __filename)
+
       const criteria = Criteria(query, ImageCriterion)
 
       const imagesToDelete = await ImageService.list(criteria)
@@ -101,11 +103,11 @@ module.exports = {
     const { imageIds, albumId } = req.body
 
     try {
-      if (!isIdValidObjectId(albumId)) throw new ErrorHandler(403, 'invalid document id passed as a parameter', __filename)
+      if (!imageIds) throw new ErrorHandler(403, 'Ids of images to be moved must be provided', __filename)
 
-      const tImage = TImage({ album: albumId })
+      if (albumId !== 0 && !isIdValidObjectId(albumId)) throw new ErrorHandler(403, 'invalid document id passed as a parameter or provide 0 to null the album', __filename)
 
-      const updated = await ImageService.updateMany(imageIds, tImage)
+      const updated = await ImageService.moveImages(imageIds, albumId !== 0 ? albumId : null)
 
       handleResponse(sculpt(updated), res)
     } catch (err) {
@@ -184,6 +186,8 @@ module.exports = {
     const { albumIds, isDeepDelete } = req.query
 
     try {
+      if (!query.albumIds) throw new ErrorHandler(403, 'Ids of albums to be deleted must be provided', __filename)
+
       const albumDelete = await AlbumService.deleteMany(toArray(albumIds))
 
       if (isDeepDelete) {

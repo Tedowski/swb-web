@@ -35,5 +35,8 @@ module.exports = {
   },
   async updateAlbum(albumIds, newAlbum = undefined) {
     return await Image.updateMany({ album: { $in: albumIds } }, { $set: { album: newAlbum } })
+  },
+  async moveImages(imageIds, albumId = undefined) {
+    return await Image.updateMany({ _id: { $in: imageIds } }, { $set: { album: albumId } })
   }
 }
