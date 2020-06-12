@@ -54,6 +54,7 @@ module.exports = {
   },
   async upload(req, res, next) {
     try {
+      console.log(req.files)
       Promise.map(req.files, async (file, i) => {
         const imageName = `${uuidv4()}.png`
         const fileObject = {

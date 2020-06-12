@@ -1,10 +1,15 @@
-.table-dark {
-  color: $light-white !important;
-  background-color: $dark-grey !important;
-}
+.table-light{
+  border-radius: 15px 15px 15px 15px !important;
+  background-color: $light-grey !important;
+  border-color: $light-grey !important;
 
-.table-dark th,
-.table-dark td,
-.table-dark thead th {
-  border-color: $dark-grey !important;
+  th,
+  td {
+    border: none !important;
+
+    &.image-td {
+      width: 200px !important;
+    }
+
+  }
 }

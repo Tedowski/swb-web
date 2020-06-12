@@ -8,6 +8,8 @@ import {
   Col, Button, Table
 } from 'react-bootstrap'
 
+import { FaTrashAlt } from 'react-icons/fa'
+
 import AuthService from '../../../services/AuthService'
 import RolesService from '../../../services/RolesService'
 
@@ -155,9 +157,12 @@ const AdminUsers = ({ token, userData }) => {
   return (
     <BaseSection fullScreen>
       <Col lg={12}>
-        <Button className="my-4" onClick={handleOpenModal}>
-          Create user
-        </Button>
+        <div className="mx-auto d-flex flex-row justify-content-between">
+          <h2>Manage users</h2>
+          <Button variant="dark-blue" onClick={handleOpenModal}>
+            Create user
+          </Button>
+        </div>
         <UserModal
           roles={roles}
           showModal={showModal}
@@ -165,7 +170,11 @@ const AdminUsers = ({ token, userData }) => {
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />
-        <Table striped bordered hover variant="dark">
+        <Table
+          hover
+          variant="light"
+          className="mt-3"
+        >
           <thead>
             <tr>
               <th>Username</th>
@@ -198,12 +207,10 @@ const AdminUsers = ({ token, userData }) => {
                 <td>{user.role.name}</td>
                 <td className="d-flex justify-content-center">
                   <>
-                    <Button
+                    <FaTrashAlt
                       variant="danger"
                       onClick={handleConfirmOpen}
-                    >
-                      Delete
-                    </Button>
+                    />
                     <ConfirmModal
                       showConfirmModal={showConfirmModal}
                       closeConfirmModal={handleConfirmClose}

@@ -8,7 +8,7 @@ export default {
     return api.get(`/blog/${id}`)
   },
   create(token, data) {
-    return api.post(`/blog?token=${token}`, data)
+    return api.post(`/blog/?token=${token}`, data)
   },
   edit(id, token, data) {
     return api.put(`/blog/${id}?token=${token}`, data)

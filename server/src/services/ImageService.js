@@ -6,6 +6,7 @@ const { searchQuery } = require('../helpers/criterions/criterions')
 module.exports = {
   async getOne(id) {
     return await Image.findById(id)
+      .populate('album')
   },
   async list(criteria) {
     return await searchQuery(Image, criteria, 'album')

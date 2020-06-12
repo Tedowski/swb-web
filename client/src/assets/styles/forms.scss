@@ -1,6 +1,32 @@
 input,
 textarea,
 select {
-  background-color: $light-white !important;
-  color: $dark-grey !important;
+  background-color: $light-grey !important;
+  color: $font-base !important;
+
+  border: none !important;
+  border-radius: 15px !important;
+  box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.12);
+
+  &:focus {
+    background-color: $white !important;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+.filter-form{
+  border: none !important;
+  border-radius: 15px !important;
+  box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.06);
+
+  input,
+  textarea,
+  select {
+    background-color: $white !important;
+    box-shadow: none !important;
+    appearance: none;
+  }
 }

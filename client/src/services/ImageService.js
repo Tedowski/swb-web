@@ -1,14 +1,25 @@
+import axios from 'axios'
 import api from './api'
 
+const uploadApi = axios.create({
+  baseURL: 'http://localhost:8080/api/',
+  headers: {
+    'Access-Control-Allow-Origin': '*'
+  }
+})
+
 export default {
-  list(token) {
-    return api.get(`/images?token=${token}`)
+  list() {
+    return api.get('/images')
   },
-  listOne(token, id) {
-    return api.get(`/images/${id}?token=${token}`)
+  listOne(id) {
+    return api.get(`/images/${id}`)
   },
   create(token, data) {
-    return api.post(`/images?token=${token}`, data)
+    return uploadApi.post(`/images?token=${token}`, data)
+  },
+  move(token, data) {
+    return api.put(`/images?token=${token}`, data)
   },
   edit(id, token, data) {
     return api.put(`/images/${id}?token=${token}`, data)

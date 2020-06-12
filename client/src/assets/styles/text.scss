@@ -1,3 +1,7 @@
+.text-custom-primary {
+  color: $custom-primary !important;
+}
+
 .text-danger {
   color: $danger !important;
 }
@@ -8,6 +12,10 @@
 
 .text-blue {
   color: $blue !important;
+}
+
+.text-grey {
+  color: $grey !important;
 }
 
 .text-light-grey {

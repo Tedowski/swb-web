@@ -1,15 +1,23 @@
 $black: #000;
+$font-base: rgba(0, 0, 0, 0.72);
 
 $white: #FFF;
-$light-white: rgba(255, 255, 255, 0.8);
+$light-white: rgba(255, 255, 255, 0.09);
 
 $dark-grey: #262626;
-$grey: #333333;
-$light-grey: #999999;
+$grey: #707070;
+$light-grey: #F2F4F8;
 
-$danger: #B1353B;
-$success: #79CC6D;
+$danger: rgb(254, 0, 74);
+$success: rgb(0, 217, 28);
 
 $yellow: #F4EB71;
 $purple: #985EFF;
-$blue: #3C9998;
+
+$custom-primary: #001B48 !important;
+$secondary: #02457A !important;
+
+$base-blue: #018ABE;
+$sky-blue: #97CABD;
+$btn-blue: rgb(242,244,248);
+$light-blue: #D6EBEE

@@ -1,30 +1,42 @@
-.btn-dark {
-  color: $light-white !important;
-  background-color: $dark-grey !important;
-  border-color: $dark-grey !important;
-
-  transition: all ease-out .5s;
-
-  &:hover {
-    color: $light-grey;
-  }
-
+.btn {
+  border-radius: 15px;
+  box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.12);
 }
 
 .btn-danger {
-  color: $light-white !important;
+  color: $white !important;
   background-color: $danger !important;
   border-color: $danger !important;
 }
 
 .btn-success {
-  color: $light-white !important;
+  color: $white !important;
   background-color: $success !important;
   border-color: $success !important;
 }
 
 .btn-primary {
-  color: $light-white !important;
+  color: $white !important;
   background-color: $blue !important;
   border-color: $blue !important;
+}
+
+.btn-dark-blue {
+  color: $white !important;
+  background-color: $custom-primary;
+  border-color: $custom-primary;
+
+  transition: all ease-out .5s;
+}
+
+.btn-light-blue {
+  color: $white !important;
+  background-color: $base-blue !important;
+  border-color: $base-blue !important;
+}
+
+.btn-light-grey {
+  color: $font-base !important;
+  background-color: $light-grey !important;
+  border-color: $light-grey !important;
 }
