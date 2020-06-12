@@ -1,0 +1,9 @@
+.accordion {
+  .card {
+    color: $custom-primary;
+    .card-header{
+      background-color: $white !important;
+      cursor: pointer;
+    }
+  }
+}

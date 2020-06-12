@@ -21,7 +21,7 @@ const AlbumModal = ({
       </Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      <Form className="mt-5">
+      <Form>
         <Form.Group controlId="formBasicName">
           <Form.Label>
             Album name

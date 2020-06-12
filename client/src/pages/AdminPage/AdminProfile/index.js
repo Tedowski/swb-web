@@ -10,7 +10,7 @@ import BaseSection from '../../../components/BaseSection'
 import AuthService from '../../../services/AuthService'
 
 
-const AdminProfile = ({ userData, token }) => {
+const AdminProfile = ({ saveUserData, userData, token }) => {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
@@ -33,10 +33,19 @@ const AdminProfile = ({ userData, token }) => {
     }
     try {
       const response = await AuthService.update(token, userData.id, data)
-      addToast(`${JSON.parse(response.config.data)} has been successfully updated.`, {
+      addToast('Your profile has been successfully updated.', {
         appearance: 'success',
         autoDismiss: false
       })
+      const newUsername = JSON.parse(response.config.data)
+      const newUserData = {
+        id: userData.id,
+        username: newUsername.username,
+        role: userData.role
+      }
+      sessionStorage.setItem('user', JSON.stringify(newUserData))
+      const sessionData = sessionStorage.getItem('user')
+      saveUserData(JSON.parse(sessionData))
     } catch (err) {
       addToast(err.response.data.message, {
         appearance: 'error',
@@ -49,16 +58,17 @@ const AdminProfile = ({ userData, token }) => {
     <BaseSection>
       <Col lg={12}>
         <h3>
-          Hello
+          Hey
           {' '}
           {userData.username}
-          (
-          {userData.role.name}
-          )
+          !
+          {' '}
+          Change your username or password here.
+          <br />
+          Then some kickflips ?
         </h3>
       </Col>
       <Col lg={4} className="mx-auto">
-        <h5>Change username or password</h5>
         <Form onSubmit={(event) => handleSubmit(event)}>
           <Form.Group controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
@@ -88,6 +98,7 @@ const AdminProfile = ({ userData, token }) => {
 }
 
 AdminProfile.propTypes = {
+  saveUserData: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   userData: PropTypes.shape({
     id: PropTypes.number,

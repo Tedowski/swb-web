@@ -1,12 +1,13 @@
 body {
-  background-color: $grey;
-  color: $light-white;
+  background-color: $white;
+  color: $font-base;
 }
 
 a {
-
+  color: $font-base;
+  text-decoration: underline;
   &:hover{
-    text-decoration: none;
+    color: $custom-primary;
   }
 
 }

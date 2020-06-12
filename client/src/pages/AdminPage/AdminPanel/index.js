@@ -18,7 +18,7 @@ const AdminPanel = () => (
       <Row>
         <Col lg={4}>
           <Link to="/admin-blog">
-            <Button variant="dark" className="d-flex flex-column align-items-center mx-auto w-100">
+            <Button variant="dark-blue" className="d-flex flex-column align-items-center mx-auto w-100">
               <FaBlog size={60} className="my-2" />
               <p className="m-4">
                 Manage Blog
@@ -28,7 +28,7 @@ const AdminPanel = () => (
         </Col>
         <Col lg={4}>
           <Link to="/admin-gallery">
-            <Button variant="dark" className="d-flex flex-column align-items-center mx-auto w-100">
+            <Button variant="dark-blue" className="d-flex flex-column align-items-center mx-auto w-100">
               <FaImages size={60} className="my-2" />
               <p className="m-4">
                 Manage Gallery
@@ -38,7 +38,7 @@ const AdminPanel = () => (
         </Col>
         <Col lg={4}>
           <Link to="/admin-users">
-            <Button variant="dark" className="d-flex flex-column align-items-center mx-auto w-100">
+            <Button variant="dark-blue" className="d-flex flex-column align-items-center mx-auto w-100">
               <FaUserCog size={60} className="my-2" />
               <p className="m-4">
                 Manage Users

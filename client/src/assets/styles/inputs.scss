@@ -1,0 +1,68 @@
+.modal-upload {
+  height: 250px;
+
+  .custom-file-label {
+    height: 200px;
+
+    color: $custom-primary;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $light-grey;
+    border: 1.5px dashed $custom-primary;
+    border-radius: 0.25rem;
+
+    &::after {
+      display: none;
+    }
+
+    &:focus {
+      background-color: $white;
+    }
+
+    svg {
+      fill: $custom-primary;
+    }
+  }
+}
+
+.blog-upload {
+  height: 250px;
+
+  input {
+     height: 200px;
+  }
+
+  .custom-file-label {
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $light-grey;
+
+    border: none !important;
+    border-radius: 15px;
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.12);
+
+     &:focus {
+       background-color: $white;
+     }
+
+     &::after {
+       display: none;
+     }
+
+     svg {
+       fill: $custom-primary;
+     }
+
+  }
+
+  .compress-link {
+    margin-top: 200px !important;
+  }
+}

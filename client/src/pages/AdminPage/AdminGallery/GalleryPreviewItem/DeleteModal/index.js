@@ -7,7 +7,8 @@ const DeleteModal = ({
   showModal,
   closeModal,
   handleDelete,
-  id
+  id,
+  type
 }) => (
   <Modal
     show={showModal}
@@ -23,7 +24,11 @@ const DeleteModal = ({
     <Modal.Body>
       <h4>Are you sure?</h4>
       <p>
-        Once you will delete this album it will be removed forever. You
+        Once you will delete this
+        {' '}
+        {type}
+        {' '}
+        it will be removed forever. You
         can not undo this action. You have been warned.
       </p>
     </Modal.Body>
@@ -38,7 +43,8 @@ DeleteModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 }
 
 export default DeleteModal

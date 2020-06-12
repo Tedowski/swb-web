@@ -1,3 +1,4 @@
+/* eslint-disable jsx-quotes */
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
@@ -8,8 +9,10 @@ import { Redirect } from 'react-router-dom'
 
 import { useToasts } from 'react-toast-notifications'
 
+import { FaPen, FaTrashAlt } from 'react-icons/fa'
+
 import {
-  Row, Col, Button, Table
+  Row, Col, Button, Table, Image
 } from 'react-bootstrap'
 
 import BaseSection from '../../../components/BaseSection'
@@ -24,25 +27,23 @@ const formatDate = (date) => moment(date).format('DD/MM/YY')
 const AdminBlog = ({ token, userData }) => {
   const [showModal, setShowModal] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
-  // eslint-disable-next-line no-unused-vars
-  const [showAlert, setShowAlert] = useState(true)
+
   const [blogPosts, setBlogPosts] = useState()
   const [tags, setTags] = useState()
   const [blogPost, setBlogPost] = useState()
 
-  // TO DO: save everyhing below to blogPost state
   const [author, setAuthor] = useState()
   const [title, setTitle] = useState()
   const [subtitle, setSubtitle] = useState()
   const [content, setContent] = useState()
-  const [imageUrl, setImageUrl] = useState()
   const [activeTags, setActiveTags] = useState([])
+  const [images, setImages] = useState([])
 
   const { addToast } = useToasts()
 
   const handleList = async () => {
     try {
-      const response = (await BlogService.list()).data
+      const response = (await BlogService.list()).data.data
       setBlogPosts(response)
     } catch (err) {
       addToast(err.response.data.message, {
@@ -54,7 +55,7 @@ const AdminBlog = ({ token, userData }) => {
 
   const filterTags = (isDisabled) => {
     const filteredTags = tags.map((tag) => {
-      const isSelected = activeTags.some((activeTag) => tag._id === activeTag._id)
+      const isSelected = activeTags.some((activeTag) => tag.id === activeTag.id)
 
       if (isSelected) {
         return {
@@ -69,7 +70,7 @@ const AdminBlog = ({ token, userData }) => {
 
   const handleOnePost = async (id) => {
     try {
-      const response = (await BlogService.listOne(id)).data
+      const response = (await BlogService.listOne(id)).data.data
       setBlogPost(response)
       const postTags = response.tags.map((tag) => tag)
       if (postTags.length !== 0) {
@@ -85,7 +86,7 @@ const AdminBlog = ({ token, userData }) => {
 
   const handleTags = async () => {
     try {
-      const response = (await TagService.list()).data
+      const response = (await TagService.list()).data.data
       setTags(response)
     } catch (err) {
       addToast(err.response.data.message, {
@@ -97,7 +98,7 @@ const AdminBlog = ({ token, userData }) => {
 
   const handleRemoveTag = (id) => {
     const indexToDelete = activeTags.map((tag) => {
-      if (tag._id === id) {
+      if (tag.id === id) {
         return {
           tag
         }
@@ -125,16 +126,16 @@ const AdminBlog = ({ token, userData }) => {
     }
     if (event.target.name === 'tags') {
       const tagIndex = event.target.selectedIndex
-      const _id = event.target[tagIndex].id
+      const { id } = event.target[tagIndex]
       const name = event.target.value
-      setActiveTags(activeTags.concat({ _id, name }))
+      setActiveTags(activeTags.concat({ id, name }))
       filterTags(true)
     }
   }
 
   const handleOpen = (id) => {
     setShowModal(true)
-    handleOnePost(id)
+    if (typeof id !== 'object') handleOnePost(id)
   }
 
   const handleClose = () => {
@@ -142,19 +143,20 @@ const AdminBlog = ({ token, userData }) => {
     setActiveTags([])
     filterTags(false)
     setShowModal(false)
+    setImages([])
   }
 
   const handleSave = async (id) => {
     handleClose()
     // eslint-disable-next-line no-shadow
-    const tags = activeTags.map((tag) => tag._id)
+    const tags = activeTags.map((tag) => tag.id)
     const data = {
       author,
       title,
       subtitle,
       tags,
       content,
-      imageUrl
+      images
     }
     try {
       await BlogService.edit(id, token, data).data
@@ -173,17 +175,18 @@ const AdminBlog = ({ token, userData }) => {
 
   const handleCreate = async () => {
     // eslint-disable-next-line no-shadow
-    const tags = activeTags.map((tag) => tag._id)
+    const tags = activeTags.map((tag) => tag.id)
     const data = {
       author,
       title,
       subtitle,
       tags,
       content,
-      imageUrl
+      images
     }
     try {
-      await BlogService.create(token, data).data
+      const response = await BlogService.create(token, data)
+      console.log(response, images)
       addToast('Blog post has been successfuly created.', {
         appearance: 'success',
         autoDismiss: false
@@ -226,8 +229,6 @@ const AdminBlog = ({ token, userData }) => {
   useEffect(() => {
     handleTags()
     handleList()
-    // This will be removed once the image upload will be done
-    setImageUrl('image.png')
     setAuthor(userData.username)
   }, [])
 
@@ -240,16 +241,16 @@ const AdminBlog = ({ token, userData }) => {
   return (
     <BaseSection fullScreen>
       <Col lg={12}>
-        <div className="mx-auto d-flex flex-column align-items-center">
-          <h2>Manage blog</h2>
+        <div className="mx-auto d-flex flex-row justify-content-between">
+          <h2>Your latest blog posts</h2>
+          <Button onClick={handleOpen} variant="dark-blue">
+            Create Blog Post
+          </Button>
         </div>
       </Col>
       <Col lg={12}>
         <Row>
           <Col lg={12}>
-            <Button onClick={handleOpen}>
-              Create Blog Post
-            </Button>
             <BlogModal
               activeTags={activeTags}
               blogPost={blogPost}
@@ -263,47 +264,53 @@ const AdminBlog = ({ token, userData }) => {
               handleTags={handleTags}
               handleChange={handleChange}
               handleRemoveTag={handleRemoveTag}
+              setImages={setImages}
             />
           </Col>
         </Row>
         <Row className="py-4">
           <Col lg={12}>
-            <Table striped bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th>Date created</th>
-                  <th>Date updated</th>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th className="text-center">Actions</th>
-                </tr>
-              </thead>
+            <Table hover variant="light">
               <tbody>
                 {blogPosts && blogPosts.map((post) => (
-                  <tr key={post._id}>
-                    <td>{formatDate(post.createdAt)}</td>
-                    <td>{formatDate(post.updatedAt)}</td>
-                    <td>{post.title}</td>
-                    <td>{post.author}</td>
-                    <td className="d-flex justify-content-center">
+                  <tr key={post.id} className="my-auto">
+                    <td className="image-td">
+                      <Image
+                        src='http://www.oneloveskatemag.com/wp-content/uploads/2019/10/73006529_456126955258424_2125230821144002560_n.jpg'
+                        rounded
+                        className="w-100"
+                      />
+                    </td>
+                    <td>
+                      <h5>
+                        {post.title}
+                      </h5>
+                      <div className="mt-4">
+                        <p className="text-uppercase text-grey font-weight-bold">
+                          author:
+                          {' '}
+                          {post.author}
+                        </p>
+                        <p className="text-uppercase text-grey font-weight-bold">
+                          {formatDate(post.createdAt)}
+                        </p>
+                      </div>
+                    </td>
+                    <td className="d-flex justify-content-center my-auto">
                       <>
-                        <Button
+                        <FaPen
                           className="mr-4"
-                          onClick={() => handleOpen(post._id)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
+                          onClick={() => handleOpen(post.id)}
+                        />
+                        <FaTrashAlt
                           variant="danger"
                           onClick={handleConfirmOpen}
-                        >
-                          Delete
-                        </Button>
+                        />
                         <ConfirmModal
                           showConfirmModal={showConfirmModal}
                           closeConfirmModal={handleConfirmClose}
                           handleDelete={handleDelete}
-                          postId={post._id}
+                          postId={post.id}
                         />
                       </>
                     </td>
@@ -345,7 +352,7 @@ BlogModal.propTypes = {
   handleChange: PropTypes.func.isRequired,
   error: PropTypes.string.isRequired,
   blogPost: PropTypes.shape({
-    _id: PropTypes.number,
+    id: PropTypes.number,
     author: PropTypes.string,
     title: PropTypes.string,
     subtitle: PropTypes.string,

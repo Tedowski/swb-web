@@ -1,13 +1,14 @@
 .gallery-main {
-position: relative;
+  position: relative;
+
 
   &::before {
     content: " ";
     position: absolute;
-    border-left: 1px $light-grey solid;
+    border-left: 1px #001B48 solid;
     top: -50px;
     right: 0;
-    height: 300%;
+    height: 100vh;
     margin-top: auto;
     margin-bottom: auto;
   }
@@ -19,12 +20,16 @@ position: relative;
   transition: all ease-out .5s;
 
   &:hover {
-    color: $blue !important;
+    transform: scale(1.1);
   }
 
   svg {
-    &:hover {
-      fill: $blue !important;
-    }
+    fill: $custom-primary;
+  }
+}
+
+.item-preview {
+  svg {
+    fill: $custom-primary;
   }
 }

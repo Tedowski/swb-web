@@ -6,7 +6,6 @@ import './assets/styles/index.scss'
 
 import Header from './components/Header'
 
-import BlogPage from './pages/BlogPage'
 import HomePage from './pages/HomePage'
 
 import AdminPage from './pages/AdminPage'
@@ -36,9 +35,6 @@ const App = () => {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/blog">
-            <BlogPage />
-          </Route>
           <Route path="/admin">
             <ToastProvider>
               <AdminPage
@@ -56,7 +52,11 @@ const App = () => {
           </Route>
           <Route path="/admin-profile">
             <ToastProvider>
-              <AdminProfile token={token} userData={userData} />
+              <AdminProfile
+                token={token}
+                userData={userData}
+                saveUserData={setUserData}
+              />
             </ToastProvider>
           </Route>
           <Route path="/admin-gallery">

@@ -28,8 +28,12 @@ const ConfirmModal = ({
       </p>
     </Modal.Body>
     <Modal.Footer>
-      <Button onClick={closeConfirmModal}>Close</Button>
-      <Button variant="danger" onClick={() => handleDelete(postId)}>Delete</Button>
+      <Button variant="dark-blue" onClick={closeConfirmModal}>
+        Close
+      </Button>
+      <Button variant="danger" onClick={() => handleDelete(postId)}>
+        Delete
+      </Button>
     </Modal.Footer>
   </Modal>
 )

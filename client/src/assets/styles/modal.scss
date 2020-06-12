@@ -1,17 +1,14 @@
-.modal-content {
-  background-color: $grey !important;
-}
+.modal{
 
-.modal-header {
-  border-bottom: 1px solid $dark-grey !important;
-}
+  .modal-content {
+    background-color: $white !important;
+  }
 
-.modal-footer {
-  border-top: 1px solid $dark-grey !important;
-}
+  .modal-header {
+    border-bottom: none !important;
+  }
 
-.alert-success {
-  color: $grey !important;
-  background-color: $success !important;
-  border-color: $success !important;
+  .modal-footer {
+    border-top: none !important;
+  }
 }

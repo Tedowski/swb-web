@@ -65,13 +65,6 @@ const Header = ({ token, userData }) => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/blog">
-                Blog
-              </Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
               <Link to="/admin">
                 Admin
               </Link>

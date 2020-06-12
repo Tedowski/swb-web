@@ -80,7 +80,7 @@ const AdminPage = ({
             onChange={handleChange}
           />
         </Form.Group>
-        <Button variant="dark" type="submit">
+        <Button variant="dark-blue" type="submit">
           Login
         </Button>
       </Form>

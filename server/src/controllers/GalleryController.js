@@ -19,7 +19,7 @@ module.exports = {
     try {
       if (!isIdValidObjectId(imageId)) throw new ErrorHandler(403, 'invalid document id passed as a parameter', __filename)
 
-      const image = ImageService.getOne(imageId)
+      const image = await ImageService.getOne(imageId)
 
       handleResponse(sculpt(image), res)
     } catch (err) {
@@ -34,7 +34,7 @@ module.exports = {
     try {
       const result = await ImageService.list(criteria)
 
-      searchResult(res, criteria, result, ['title', 'url', 'album.id', 'album.name'])
+      searchResult(res, criteria, result, ['title', 'url', 'createdAt', 'updatedAt', 'album'])
     } catch (err) {
       next(err)
     }
