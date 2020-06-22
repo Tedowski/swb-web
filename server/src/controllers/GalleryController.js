@@ -183,14 +183,14 @@ module.exports = {
     }
   },
   async deleteAlbums(req, res, next) {
-    const { albumIds, isDeepDelete } = req.query
+    const { albumIds } = req.query
 
     try {
-      if (!query.albumIds) throw new ErrorHandler(403, 'Ids of albums to be deleted must be provided', __filename)
+      if (!req.query.albumIds) throw new ErrorHandler(403, 'Ids of albums to be deleted must be provided', __filename)
 
-      const albumDelete = await AlbumService.deleteMany(toArray(albumIds))
+      const albumDelete = await AlbumService.deleteMany(toArray(req.query.albumIds))
 
-      if (isDeepDelete) {
+      if (req.query.isDeepDelete) {
         const criteria = Criteria({
           albumIds,
           limit: 1000
@@ -208,6 +208,7 @@ module.exports = {
 
         const urlsToDelete = imagesToDelete.data.map((image) => image.url)
         const paths = [`${dirs.images}/full/`, `${dirs.images}/medium/`, `${dirs.images}/small/`]
+        // eslint-disable-next-line max-len
         const filesToDelete = urlsToDelete.map((url) => paths.map((filePath) => filePath + url)).flat()
 
         deleteFiles(filesToDelete, async (err) => {
@@ -223,7 +224,7 @@ module.exports = {
           }
         })
       } else {
-        const imageUpdate = await ImageService.updateAlbum(albumIds)
+        const imageUpdate = await ImageService.updateAlbum(toArray(req.query.albumIds))
 
         handleResponse({
           album: albumDelete,
